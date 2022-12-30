@@ -1,0 +1,1 @@
+export const private_key = 'MY OWN_SUPER_SUPER_PRIVATE KEYYYY'
