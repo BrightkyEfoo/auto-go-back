@@ -12,13 +12,15 @@ import { ExamenQuestionModel } from '../models/Examen/ExamenQuestion.js';
 import { ExamenModel } from '../models/Examen/Examen.js';
 import { GrandProfUserConnectedMessage1, GrandProfUserConnectedMessage2, GrandProfUserConnectedMessage3 } from './GrandProf.js';
 import { ExamenScoreModel } from '../models/ExamenScoreModel.js';
+import { PostgresDialect } from '@sequelize/postgres';
 // import { UserToThemeModel } from '../models/UserToThemeModel.js';
 
-const sequelize = new Sequelize('autogo', 'root', '123456789', {
-  // host: 'localhost',
-  host: 'mariadb-95506-0.cloudclusters.net',
-  port:10023,
-  dialect: 'mariadb',
+console.log('infos', process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD);
+
+const sequelize = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
+  host: process.env.POSTGRES_HOST,
+  port: process.env.DB_PORT,
+  dialect: 'postgres',
   dialectOptions: {
     timezone: 'Etc/GMT+1',
   },

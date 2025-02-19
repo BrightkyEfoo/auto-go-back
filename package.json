@@ -13,6 +13,7 @@
   "author": "bright",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/postgres": "^7.0.0-alpha.44",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
@@ -26,6 +27,8 @@
     "nodemon": "^2.0.19",
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
     "secure-random-password": "^0.2.3",
     "sequelize": "^6.21.3",
     "socket.io": "^4.5.2"

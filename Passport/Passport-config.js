@@ -1,13 +1,17 @@
 import { Strategy } from "passport-google-oauth2";
 import { User } from "../database/Sequelize.js";
 import password from "secure-random-password";
+import { config } from "dotenv";
+
+config()
+
 const PassportConfig = (passport) => {
   passport.use(
     new Strategy(
       {
-        clientID: '762918913553-k93q27o0tko30m02jp1ursthcmsp4rbk.apps.googleusercontent.com',
-        clientSecret: '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',
-        callbackURL: "https://autogoback237.herokuapp.com/auth/google/callback",
+        clientID: process.env.clientID,
+        clientSecret: process.env.clientSecret,
+        callbackURL: process.env.callbackURL,
         passReqToCallback: true,
       },
       async (request, accessToken, refreshToken, profile, done) => {
