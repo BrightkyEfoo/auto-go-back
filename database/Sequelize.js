@@ -12,15 +12,14 @@ import { ExamenQuestionModel } from '../models/Examen/ExamenQuestion.js';
 import { ExamenModel } from '../models/Examen/Examen.js';
 import { GrandProfUserConnectedMessage1, GrandProfUserConnectedMessage2, GrandProfUserConnectedMessage3 } from './GrandProf.js';
 import { ExamenScoreModel } from '../models/ExamenScoreModel.js';
-import { PostgresDialect } from '@sequelize/postgres';
 // import { UserToThemeModel } from '../models/UserToThemeModel.js';
 
-console.log('infos', process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD);
+console.log('infos', process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD);
 
-const sequelize = new Sequelize(process.env.POSTGRES_DB, process.env.POSTGRES_USER, process.env.POSTGRES_PASSWORD, {
-  host: process.env.POSTGRES_HOST,
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
   port: process.env.DB_PORT,
-  dialect: 'postgres',
+  dialect: 'mariadb',
   dialectOptions: {
     timezone: 'Etc/GMT+1',
   },
@@ -111,13 +110,11 @@ ExamenQuestion.hasOne(ExamenMultimedia, { as: 'audio' });
 ExamenQuestion.hasOne(ExamenMultimedia, { as: 'head' });
 Examen.hasMany(ExamenQuestion, { as: 'questions' });
 
-
 // ExamenScore (1 : 1) -----> Examen
-ExamenScore.belongsTo(Examen)
-
+ExamenScore.belongsTo(Examen);
 
 //user (1 : 1) ------> (0: n) ExamenScore
-User.hasMany(ExamenScore)
+User.hasMany(ExamenScore);
 
 export const initDb = () => {
   return sequelize
@@ -125,9 +122,9 @@ export const initDb = () => {
     .then(_ => {
       Examen.create({
         title: 'exam1',
-        type : 'EXAMEN',
-        tags : `["",["essai"],["","tag"],["","panneaux"],["","signalisations"],["","local"]]`,
-        description : `ceci est un test d'entrainement digne des plus grands conducteurs du monde....`
+        type: 'EXAMEN',
+        tags: `["",["essai"],["","tag"],["","panneaux"],["","signalisations"],["","local"]]`,
+        description: `ceci est un test d'entrainement digne des plus grands conducteurs du monde....`,
       }).then(examen => {
         ExamenQuestion.create({
           title: 'est ce que c est alors bien',
@@ -160,14 +157,14 @@ export const initDb = () => {
             title: 'peut etre',
           }).then(reponse => {
             question.addReponse(reponse);
-          })
+          });
           ExamenReponses.create({
             title: 'je ne sais pas',
           }).then(reponse => {
             question.addReponse(reponse);
           });
         });
-        
+
         ExamenQuestion.create({
           title: 'De quel generique sagit il ?',
         }).then(question => {
@@ -208,13 +205,11 @@ export const initDb = () => {
         });
       });
 
-
-
       Examen.create({
         title: 'entrainement1',
-        type : 'TEST',
-        tags : `["",["essai"],["","tag"],["","panneaux"],["","signalisations"],["","local"]]`,
-        description : `ceci est un test d'entrainement digne des plus grands conducteurs du monde....`
+        type: 'TEST',
+        tags: `["",["essai"],["","tag"],["","panneaux"],["","signalisations"],["","local"]]`,
+        description: `ceci est un test d'entrainement digne des plus grands conducteurs du monde....`,
       }).then(examen => {
         ExamenQuestion.create({
           title: `C'est quoi sur la photo`,
@@ -240,7 +235,7 @@ export const initDb = () => {
           ExamenReponses.create({
             title: 'non',
           }).then(reponse => {
-            question.addReponse(reponse)
+            question.addReponse(reponse);
           });
           ExamenReponses.create({
             title: 'peut etre',
@@ -291,7 +286,6 @@ export const initDb = () => {
             title: 'Ken le survivant',
           }).then(reponse => {
             question.addReponse(reponse);
-            
           });
         });
       });
@@ -391,9 +385,9 @@ export const initDb = () => {
         });
       });
 
-      GrandProfUserConnectedMessage1()
-      GrandProfUserConnectedMessage2()
-      GrandProfUserConnectedMessage3()
+      GrandProfUserConnectedMessage1();
+      GrandProfUserConnectedMessage2();
+      GrandProfUserConnectedMessage3();
       Theme.create({
         nom: 'La route et le reseau routier de votre environement',
       }).then(theme => {
