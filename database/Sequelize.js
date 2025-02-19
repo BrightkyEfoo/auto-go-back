@@ -12,6 +12,8 @@ import { ExamenQuestionModel } from '../models/Examen/ExamenQuestion.js';
 import { ExamenModel } from '../models/Examen/Examen.js';
 import { GrandProfUserConnectedMessage1, GrandProfUserConnectedMessage2, GrandProfUserConnectedMessage3 } from './GrandProf.js';
 import { ExamenScoreModel } from '../models/ExamenScoreModel.js';
+import { config } from 'dotenv';
+config();
 // import { UserToThemeModel } from '../models/UserToThemeModel.js';
 
 console.log('infos', process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD);
