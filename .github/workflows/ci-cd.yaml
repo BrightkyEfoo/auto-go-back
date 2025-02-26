@@ -1,0 +1,31 @@
+name: Déploiement sur le VPS
+
+on:
+ push:
+   branches:
+     - main  # Remplacez par la branche de votre choix
+
+jobs:
+ deploy:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Récupérer le code source
+       uses: actions/checkout@v3
+
+     - name: Configurer la clé SSH
+       run: |
+         mkdir -p ~/.ssh
+         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+         chmod 600 ~/.ssh/id_rsa
+         ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+     - name: Déployer sur le VPS
+       run: |
+         ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+           cd ~/br &&
+           git pull origin main &&
+           git clone https://github.com/votre-utilisateur/votre-repository.git &&
+           cd votre-repository &&
+           npm install &&
+           pm2 reload ecosystem.config.js || pm2 start ecosystem.config.js
+         EOF
