@@ -7,9 +7,9 @@ on:
       - main
 
 env:
-  APP_NAME: "AUTOGO"
-  PROJECT_PATH: "~/apps/backend"
-  BRANCH: "main"
+  APP_NAME: 'AUTOGO'
+  PROJECT_PATH: '~/apps/backend'
+  BRANCH: 'main'
 
 jobs:
   setup_project_directory:
