@@ -23,8 +23,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            if [ ! -d "${PROJECT_PATH}" ]; then
-              mkdir -p ${PROJECT_PATH}
+            if [ ! -d "${{ env.PROJECT_PATH }}" ]; then
+              mkdir -p ${{ env.PROJECT_PATH }}
             fi
 
   update_repository:
@@ -39,11 +39,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.VPS_PORT }}
           script: |
-            cd ${PROJECT_PATH}
+            cd ${{ env.PROJECT_PATH }}
             if [ ! -d ".git" ]; then
-              git clone -b ${BRANCH} https://github.com/utilisateur/repo.git .
+              git clone -b ${{ env.BRANCH }} https://github.com/utilisateur/repo.git .
             else
-              git pull origin ${BRANCH}
+              git pull origin ${{ env.BRANCH }}
             fi
 
   deploy_application:
@@ -69,29 +69,29 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           envs: CLIENT_ID, CLIENT_SECRET, CALLBACK_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, APP_NAME
           script: |
-            cd ${PROJECT_PATH}
+            cd ${{ env.PROJECT_PATH }}
             # Écrire le fichier .env
             cat > .env <<EOL
             # Google OAuth
-            clientID=$CLIENT_ID
-            clientSecret=$CLIENT_SECRET
-            callbackURL=$CALLBACK_URL
+            clientID=${{ secrets.CLIENT_ID }}
+            clientSecret=${{ secrets.CLIENT_SECRET }}
+            callbackURL=${{ secrets.CALLBACK_URL }}
 
             # Database
-            DB_NAME=$DB_NAME
-            DB_USER=$DB_USER
-            DB_PASSWORD=$DB_PASSWORD
-            DB_HOST=$DB_HOST
-            DB_PORT=$DB_PORT
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
 
             # Nom de l'application
-            APP_NAME=$APP_NAME
+            APP_NAME=${{ env.APP_NAME }}
             EOL
 
             npm install
 
-            if pm2 list | grep "$APP_NAME"; then
-              pm2 reload ecosystem.config.js --only $APP_NAME
+            if pm2 list | grep "${{ env.APP_NAME }}"; then
+              pm2 reload ecosystem.config.js --only ${{ env.APP_NAME }}
             else
-              pm2 start ecosystem.config.js --only $APP_NAME
+              pm2 start ecosystem.config.js --only ${{ env.APP_NAME }}
             fi
