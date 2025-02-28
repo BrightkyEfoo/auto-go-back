@@ -4,7 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main # Remplacez par la branche de votre choix
+      - main 
+
+env:
+  APP_NAME: "AUTOGO" 
 
 jobs:
   deploy:
@@ -25,6 +28,25 @@ jobs:
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd ~/br &&
             git pull origin main &&
+
+            # Écrire le fichier .env
+            cat > .env <<EOL
+            # Google OAuth
+            clientID=${{ secrets.CLIENT_ID }}
+            clientSecret=${{ secrets.CLIENT_SECRET }}
+            callbackURL=${{ secrets.CALLBACK_URL }}
+
+            # Database
+            DB_NAME=${{ secrets.DB_NAME }}
+            DB_USER=${{ secrets.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_HOST=${{ secrets.DB_HOST }}
+            DB_PORT=${{ secrets.DB_PORT }}
+
+            # Nom de l'application
+            APP_NAME=${{ env.APP_NAME }}
+            EOL
+
             npm install &&
-            pm2 list | grep "votre-app" && pm2 reload ecosystem.config.js || pm2 start ecosystem.config.js
+            pm2 list | grep "${{ env.APP_NAME }}" && pm2 reload ecosystem.config.js || pm2 start ecosystem.config.js
           EOF
