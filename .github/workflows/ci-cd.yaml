@@ -9,6 +9,7 @@ on:
 env:
   APP_NAME: 'AUTOGO'
   PROJECT_PATH: '~/apps/backend'
+  REPO: https://github.com/BrightkyEfoo/auto-go-back
   BRANCH: 'main'
 
 jobs:
@@ -41,8 +42,8 @@ jobs:
           script: |
             cd ${{ env.PROJECT_PATH }}
             if [ ! -d ".git" ]; then
-              echo "Cloning the repository ${{ github.repository_url }} ... in ${{ env.PROJECT_PATH }}" 
-              git clone -b ${{ env.BRANCH }} ${{ github.repository_url }} .
+              echo "Cloning the repository ${{ env.REPO }} ... in ${{ env.PROJECT_PATH }}" 
+              git clone -b ${{ env.BRANCH }} ${{ env.REPO }} .
             else
               git pull origin ${{ env.BRANCH }}
             fi
