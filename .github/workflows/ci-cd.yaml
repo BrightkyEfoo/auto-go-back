@@ -41,7 +41,8 @@ jobs:
           script: |
             cd ${{ env.PROJECT_PATH }}
             if [ ! -d ".git" ]; then
-              git clone -b ${{ env.BRANCH }} https://github.com/utilisateur/repo.git .
+              echo "Cloning the repository ${{ github.repository_url }} ... in ${{ env.PROJECT_PATH }}" 
+              git clone -b ${{ env.BRANCH }} ${{ github.repository_url }} .
             else
               git pull origin ${{ env.BRANCH }}
             fi
