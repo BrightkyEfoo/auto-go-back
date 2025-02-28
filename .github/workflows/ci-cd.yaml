@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - master
 
 env:
   APP_NAME: 'AUTOGO'
   PROJECT_PATH: '~/apps/backend'
   REPO: https://github.com/BrightkyEfoo/auto-go-back
-  BRANCH: 'main'
+  BRANCH: 'master'
 
 jobs:
   setup_project_directory:
