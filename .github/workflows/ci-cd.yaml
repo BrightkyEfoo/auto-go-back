@@ -54,16 +54,16 @@ jobs:
     steps:
       - name: Déployer l'application avec PM2
         uses: appleboy/ssh-action@v1.2.1
-        env:
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          APP_NAME: ${{ env.APP_NAME }}
+        # env:
+        #   CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        #   CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        #   CALLBACK_URL: ${{ secrets.CALLBACK_URL }}
+        #   DB_NAME: ${{ secrets.DB_NAME }}
+        #   DB_USER: ${{ secrets.DB_USER }}
+        #   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        #   DB_HOST: ${{ secrets.DB_HOST }}
+        #   DB_PORT: ${{ secrets.DB_PORT }}
+        #   APP_NAME: ${{ env.APP_NAME }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
@@ -90,14 +90,12 @@ jobs:
             APP_NAME=${{ env.APP_NAME }}
             EOL
 
-            cd ${{ env.PROJECT_PATH }}
+            echo "hello"
 
-            echo $whoami
+            npm install
 
-            # npm install
-
-            # if pm2 list | grep "${{ env.APP_NAME }}"; then
-            #   pm2 reload ecosystem.config.js --only ${{ env.APP_NAME }}
-            # else
-            #   pm2 start ecosystem.config.js --only ${{ env.APP_NAME }}
-            # fi
+            if pm2 list | grep "${{ env.APP_NAME }}"; then
+              pm2 reload ecosystem.config.js --only ${{ env.APP_NAME }}
+            else
+              pm2 start ecosystem.config.js --only ${{ env.APP_NAME }}
+            fi
