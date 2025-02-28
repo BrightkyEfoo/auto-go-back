@@ -94,10 +94,10 @@ jobs:
 
             echo $whoami
 
-            npm install
+            # npm install
 
-            if pm2 list | grep "${{ env.APP_NAME }}"; then
-              pm2 reload ecosystem.config.js --only ${{ env.APP_NAME }}
-            else
-              pm2 start ecosystem.config.js --only ${{ env.APP_NAME }}
-            fi
+            # if pm2 list | grep "${{ env.APP_NAME }}"; then
+            #   pm2 reload ecosystem.config.js --only ${{ env.APP_NAME }}
+            # else
+            #   pm2 start ecosystem.config.js --only ${{ env.APP_NAME }}
+            # fi
