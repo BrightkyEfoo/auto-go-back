@@ -90,6 +90,10 @@ jobs:
             APP_NAME=${{ env.APP_NAME }}
             EOL
 
+            cd ${{ env.PROJECT_PATH }}
+
+            echo $whoami
+
             npm install
 
             if pm2 list | grep "${{ env.APP_NAME }}"; then
