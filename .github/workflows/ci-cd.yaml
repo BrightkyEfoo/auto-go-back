@@ -71,7 +71,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           envs: CLIENT_ID, CLIENT_SECRET, CALLBACK_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, APP_NAME
           script: |
-            export PATH=$PATH:/usr/local/bin:/home/${{ secrets.VPS_USER }}/.nvm/versions/node/v*/bin:${PROJECT_PATH}/node_modules/.bin
+            export PATH=$PATH:/usr/local/bin:/home/${{ secrets.VPS_USER }}/.nvm/versions/node/v*/bin:${{ env.PROJECT_PATH }}/node_modules/.bin
             cd ${{ env.PROJECT_PATH }}
             # Écrire le fichier .env
             cat > .env <<EOL
