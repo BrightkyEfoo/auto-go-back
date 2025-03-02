@@ -90,7 +90,7 @@ jobs:
             APP_NAME=${{ env.APP_NAME }}
             EOL
 
-            echo "hello"
+            echo "Utilisateur actuel : $(whoami)"
 
             npm install
 
