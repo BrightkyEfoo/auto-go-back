@@ -49,7 +49,7 @@ jobs:
               git pull origin ${{ env.BRANCH }}
             fi
 
-            npm install
+            # npm install
 
 
   deploy_application:
