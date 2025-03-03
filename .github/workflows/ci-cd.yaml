@@ -41,6 +41,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             cd ${{ env.PROJECT_PATH }}
+            echo $PATH
             if [ ! -d ".git" ]; then
               echo "Cloning the repository ${{ env.REPO }} ... in ${{ env.PROJECT_PATH }}" 
               git clone -b ${{ env.BRANCH }} ${{ env.REPO }} .
@@ -73,6 +74,7 @@ jobs:
           script: |
             whoami
             export PATH=$PATH:/usr/local/bin:/home/${{ secrets.VPS_USER }}/.nvm/versions/node/v*/bin:${{ env.PROJECT_PATH }}/node_modules/.bin
+            echo path: $PATH
             cd ${{ env.PROJECT_PATH }}
             # Écrire le fichier .env
             cat > .env <<EOL
