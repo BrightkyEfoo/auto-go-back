@@ -1,6 +1,8 @@
 module.exports = {
-  apps : [{
-    script: 'index.js',
-    name: 'AUTO-GO BACK'
-  }],
+  apps: [
+    {
+      script: 'index.js',
+      name: 'AUTOGO',
+    },
+  ],
 };
