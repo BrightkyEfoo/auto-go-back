@@ -50,7 +50,7 @@ jobs:
             fi
 
             npm install
-            
+
 
   deploy_application:
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
           # envs: CLIENT_ID, CLIENT_SECRET, CALLBACK_URL, DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, APP_NAME
           script: |
             whoami
-            export PATH=$PATH:/usr/local/bin:/home/${{ secrets.VPS_USER }}/.nvm/versions/node/v*/bin:${{ env.PROJECT_PATH }}/node_modules/.bin
+            export PATH=$PATH:/usr/local/bin:/home/brightky/.nvm/versions/node/v23.8.0/bin
             echo path: $PATH
             cd ${{ env.PROJECT_PATH }}
             # Écrire le fichier .env
